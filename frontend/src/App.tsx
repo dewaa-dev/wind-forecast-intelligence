@@ -52,7 +52,9 @@ type Analysis = {
   data: Point[]
 }
 
-const API_URL = `${window.location.protocol}//${window.location.hostname}:8000/api/analysis`
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  `${window.location.protocol}//${window.location.hostname}:8000/api/analysis`
 
 const numberFormat = new Intl.NumberFormat('en-GB', {
   maximumFractionDigits: 0,

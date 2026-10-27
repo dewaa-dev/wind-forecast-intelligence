@@ -1,4 +1,4 @@
-
+import os
 from datetime import datetime, timedelta, timezone
 from math import sqrt
 from statistics import mean
@@ -13,12 +13,19 @@ app = FastAPI(
     version="0.2.0",
 )
 
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "").rstrip("/")
+
+allowed_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+if frontend_origin:
+    allowed_origins.append(frontend_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
